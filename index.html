@@ -4,646 +4,224 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Children Duty Roster</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --surface2: #1c2330;
-  --border: #30363d;
-  --morning: #0d4a2e;
-  --morning-text: #56d68a;
-  --morning-bg: #0a2a1a;
-  --evening: #4a1a0d;
-  --evening-text: #f28b5e;
-  --evening-bg: #2a100a;
-  --both: #3a3210;
-  --both-text: #f5d060;
-  --offday: #1a1a2e;
-  --offday-text: #9b8fff;
-  --accent: #56d68a;
-  --accent2: #f5d060;
-  --text: #e6edf3;
-  --text-muted: #7d8590;
-  --heading-font: 'Bebas Neue', sans-serif;
-  --body-font: 'DM Sans', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Barlow:wght@400;500;600;700;800&display=swap');
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green-dark: #1a6b1a;
+  --green-mid: #2d8a2d;
+  --green-light: #90EE90;
+  --green-pale: #c8f0c8;
+  --yellow: #FFD700;
+  --orange: #FF8C00;
+  --red-light: #ffb3b3;
+  --blue-light: #b3d9ff;
+  --white: #ffffff;
+}
 
 body {
-  background: var(--bg);
-  font-family: var(--body-font);
-  color: var(--text);
-  min-height: 100vh;
-  padding: 32px 16px 60px;
-  position: relative;
-  overflow-x: hidden;
+  background:#1a1a2e;
+  font-family:'Barlow',sans-serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
 }
 
-/* Subtle grid background */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(86,214,138,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(86,214,138,.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
+h1{
+  font-family:'Teko';
+  color:var(--yellow);
+  letter-spacing:4px;
 }
 
-.wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
+.controls{
+  margin:15px;
 }
 
-/* ── HEADER ── */
-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
+.roster-card{
+  background:#e8f5e8;
+  border:3px solid var(--green-dark);
+  width:100%;
+  max-width:860px;
 }
 
-.header-left {
-  display: flex;
-  flex-direction: column;
+.roster-body{display:flex;}
+
+.left-section{flex:1.1;border-right:3px solid var(--green-dark);}
+.right-section{flex:1;}
+
+.section-header,.offday-header{
+  text-align:center;
+  font-family:'Teko';
+  font-size:1.3rem;
+  padding:6px;
+  letter-spacing:2px;
 }
 
-.logo-line {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.section-header{background:var(--green-dark);color:#fff;}
+.offday-header{background:var(--yellow);}
+
+table{width:100%;border-collapse:collapse;}
+
+th{
+  background:#b8e8b8;
+  font-weight:900;
+  font-size:1rem;
 }
 
-.logo-icon {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, var(--morning-text), var(--accent2));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  flex-shrink: 0;
+td{
+  text-align:center;
+  padding:6px;
+  font-weight:800;
+  font-size:1rem;
 }
 
-h1 {
-  font-family: var(--heading-font);
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  letter-spacing: 3px;
-  line-height: 1;
-  background: linear-gradient(135deg, var(--morning-text) 0%, var(--accent2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.row-morning{background:#c8f0c8;}
+.row-evening{background:#ffb3b3;}
+.row-both{background:#ffe0b2;}
+
+.row-total-label td{
+  background:#b3d9ff;
+  font-size:1.1rem;
 }
 
-.subtitle {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 4px;
-  margin-left: 52px;
+.row-grand td{
+  background:var(--yellow);
+  font-size:1.2rem;
 }
 
-/* ── CONTROLS ── */
-.controls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
+.offday-names{
+  color:#c0392b;
+  font-weight:900;
+  font-size:1.1rem;
 }
 
-.day-pills {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.pill {
-  font-family: var(--body-font);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 7px 14px;
-  border-radius: 100px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.pill:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.pill.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0d1117;
-}
-
-/* ── STAT BADGES ── */
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.stat-badge {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.stat-badge .label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-}
-
-.stat-badge .value {
-  font-family: var(--heading-font);
-  font-size: 2rem;
-  line-height: 1;
-  letter-spacing: 1px;
-}
-
-.stat-badge.morning .value { color: var(--morning-text); }
-.stat-badge.evening .value { color: var(--evening-text); }
-.stat-badge.offday .value  { color: var(--offday-text); }
-.stat-badge.total  .value  { color: var(--accent2); }
-
-/* ── MAIN GRID ── */
-.roster-grid {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 14px;
-}
-
-/* ── TABLE PANEL ── */
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.panel-header {
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-}
-
-.panel-title {
-  font-family: var(--heading-font);
-  font-size: 1.1rem;
-  letter-spacing: 2px;
-  color: var(--text);
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.dot.morning { background: var(--morning-text); }
-.dot.evening { background: var(--evening-text); }
-.dot.both    { background: var(--both-text); }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-thead th {
-  padding: 10px 14px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: var(--surface2);
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-
-thead th:not(:first-child) { text-align: center; }
-
-tbody tr {
-  border-bottom: 1px solid rgba(48,54,61,0.5);
-  transition: background 0.12s;
-  animation: rowIn 0.3s ease both;
-}
-
-tbody tr:hover { background: rgba(255,255,255,0.03); }
-
-@keyframes rowIn {
-  from { opacity: 0; transform: translateX(-8px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-td {
-  padding: 9px 14px;
-  font-size: 0.88rem;
-  font-weight: 500;
-}
-
-td:not(:first-child) { text-align: center; }
-
-/* shift type indicators */
-.name-cell {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.shift-bar {
-  width: 3px;
-  height: 18px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-tr.row-morning .shift-bar { background: var(--morning-text); }
-tr.row-evening .shift-bar { background: var(--evening-text); }
-tr.row-both    .shift-bar { background: var(--both-text); }
-
-tr.row-morning td:first-child { color: var(--morning-text); }
-tr.row-evening td:first-child { color: var(--evening-text); }
-tr.row-both    td:first-child { color: var(--both-text); }
-
-.check {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 5px;
-  font-size: 0.75rem;
-  line-height: 20px;
-}
-
-tr.row-morning .check.morning,
-tr.row-both    .check.morning { background: var(--morning-bg); color: var(--morning-text); }
-tr.row-evening .check.evening,
-tr.row-both    .check.evening { background: var(--evening-bg); color: var(--evening-text); }
-
-.dash { color: var(--border); font-size: 1.2rem; }
-
-/* totals row */
-.row-totals td {
-  padding: 11px 14px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: var(--surface2);
-  border-top: 2px solid var(--border);
-}
-
-.row-totals td:not(:first-child) { color: var(--text); font-size: 1rem; }
-
-/* ── RIGHT COLUMN ── */
-.right-col {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* Day Card */
-.day-card {
-  background: linear-gradient(135deg, var(--morning-bg) 0%, var(--evening-bg) 100%);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px 18px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.day-card::before {
-  content: '';
-  position: absolute;
-  inset: -30%;
-  background: radial-gradient(circle at 50% 50%, rgba(86,214,138,0.07), transparent 60%);
-  pointer-events: none;
-}
-
-.day-name {
-  font-family: var(--heading-font);
-  font-size: 2.8rem;
-  letter-spacing: 4px;
-  background: linear-gradient(135deg, var(--morning-text), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-}
-
-.day-sub {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 6px;
-}
-
-/* Off Day Panel */
-.offday-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  flex: 1;
-}
-
-.offday-panel .panel-header {
-  background: linear-gradient(90deg, rgba(155,143,255,0.12), transparent);
-  border-bottom-color: rgba(155,143,255,0.2);
-}
-
-.offday-panel .panel-title { color: var(--offday-text); }
-
-.offday-list {
-  padding: 14px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.offday-chip {
-  background: rgba(155,143,255,0.1);
-  border: 1px solid rgba(155,143,255,0.25);
-  color: var(--offday-text);
-  border-radius: 100px;
-  padding: 5px 12px;
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-/* ── LEGEND ── */
-.legend {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 18px;
-  padding: 14px 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.legend-bar {
-  width: 3px;
-  height: 16px;
-  border-radius: 2px;
-}
-
-.legend-bar.m { background: var(--morning-text); }
-.legend-bar.e { background: var(--evening-text); }
-.legend-bar.b { background: var(--both-text); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  .roster-grid { grid-template-columns: 1fr; }
-  .right-col { flex-direction: row; flex-wrap: wrap; }
-  .day-card { flex: 1; min-width: 140px; }
-  .offday-panel { flex: 2; min-width: 200px; }
-  .stats-row { grid-template-columns: repeat(2,1fr); }
-  header { flex-direction: column; align-items: flex-start; }
+.date-cell{
+  background:var(--green-mid);
+  color:var(--yellow);
+  text-align:center;
+  font-family:'Teko';
+  font-size:1.5rem;
+  padding:10px;
 }
 </style>
 </head>
+
 <body>
 
-<div class="wrapper">
+<h1>📋 CHILDREN DUTY ROSTER</h1>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-left">
-      <div class="logo-line">
-        <div class="logo-icon">📋</div>
-        <h1>DUTY ROSTER</h1>
-      </div>
-      <div class="subtitle">Children Shift Schedule</div>
-    </div>
+<div class="controls">
+<select id="daySelect">
+<option>Saturday</option>
+<option>Sunday</option>
+<option>Monday</option>
+<option>Tuesday</option>
+<option>Wednesday</option>
+<option>Thursday</option>
+<option>Friday</option>
+</select>
 
-    <!-- DAY PILLS -->
-    <div class="day-pills" id="dayPills"></div>
-  </header>
-
-  <!-- STAT BADGES -->
-  <div class="stats-row" id="statsRow"></div>
-
-  <!-- MAIN CONTENT -->
-  <div class="roster-grid">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">SHIFT ASSIGNMENTS</div>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Morning</th>
-            <th>Evening</th>
-          </tr>
-        </thead>
-        <tbody id="rosterBody"></tbody>
-        <tfoot id="rosterFoot"></tfoot>
-      </table>
-    </div>
-
-    <div class="right-col">
-      <div class="day-card">
-        <div class="day-name" id="dayName"></div>
-        <div class="day-sub">Active Day</div>
-      </div>
-
-      <div class="offday-panel panel">
-        <div class="panel-header">
-          <div class="panel-title">OFF DAY</div>
-        </div>
-        <div class="offday-list" id="offdayList"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LEGEND -->
-  <div class="legend">
-    <div class="legend-item"><div class="legend-bar m"></div>Morning only</div>
-    <div class="legend-item"><div class="legend-bar e"></div>Evening only</div>
-    <div class="legend-item"><div class="legend-bar b"></div>Both shifts</div>
-  </div>
-
+<input type="date" id="dateInput">
 </div>
 
-<script>
-const DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
+<div class="roster-card" id="rosterCard"></div>
 
-const rosterData = {
-  Saturday:{
-    morning:["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"],
-    evening:["Runu","Mou","Onti","Jiniya","Nafisa","Arifa","Saied","Ashik","Suikraching"],
-    offday:["Anika","Arpita","Ratan"]
-  },
-  Sunday:{
-    morning:["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"],
-    evening:["Juie","Arifa","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"],
-    offday:["Mou","Hasib","Anila","Rida"]
-  },
-  Monday:{
-    morning:["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"],
-    evening:["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"],
-    offday:["Saied","Arifa","Nafisa"]
-  },
-  Tuesday:{
-    morning:["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"],
-    evening:["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee"],
-    offday:["Yeasmin","Sumaya","Jiniya"]
-  },
-  Wednesday:{
-    morning:["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"],
-    evening:["Mou","Saied","Arifa","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"],
-    offday:["Ashik","Afrain","Onti"]
-  },
-  Thursday:{
-    morning:["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"],
-    evening:["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Arifa","Ashik","Ratan"],
-    offday:["Juie","Suikraching","Alvee"]
-  },
-  Friday:{
-    morning:["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"],
-    evening:["Sumaya","Jiniya","Saied","Juie","Arifa","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"],
-    offday:["Runu"]
-  }
+<script>
+
+const ALL_CHILDREN=[
+"Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching",
+"Juie","Afrain","Nafisa","Ashik","Abrar","Mou","Arpita","Anila","Ratan","Alvee",
+"Yeasmin","Sumaya","Jiniya","Arifa"
+];
+
+const rosterData={
+Saturday:{
+morning:["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"],
+evening:["Runu","Mou","Onti","Jiniya","Nafisa","Arifa","Saied","Ashik","Suikraching"],
+offday:["Anika","Arpita","Ratan"]
+},
+Sunday:{
+morning:["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"],
+evening:["Juie","Arifa","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"],
+offday:["Mou","Hasib","Anila","Rida"]
+},
+Monday:{
+morning:["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"],
+evening:["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"],
+offday:["Saied","Arifa","Nafisa"]
+},
+Tuesday:{
+morning:["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"],
+evening:["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee"],
+offday:["Yeasmin","Sumaya","Jiniya"]
+},
+Wednesday:{
+morning:["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"],
+evening:["Mou","Saied","Arifa","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"],
+offday:["Ashik","Afrain","Onti"]
+},
+Thursday:{
+morning:["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"],
+evening:["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Arifa","Ashik","Ratan"],
+offday:["Juie","Suikraching","Alvee"]
+},
+Friday:{
+morning:["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"],
+evening:["Sumaya","Jiniya","Saied","Juie","Arifa","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"],
+offday:["Runu"]
+}
 };
 
-let activeDay = DAYS[0];
+function render(){
+const day=document.getElementById('daySelect').value;
+const data=rosterData[day];
 
-function buildPills() {
-  const container = document.getElementById('dayPills');
-  DAYS.forEach(d => {
-    const btn = document.createElement('button');
-    btn.className = 'pill' + (d === activeDay ? ' active' : '');
-    btn.textContent = d.slice(0,3).toUpperCase();
-    btn.addEventListener('click', () => { activeDay = d; render(); });
-    container.appendChild(btn);
-  });
+const mSet=new Set(data.morning);
+const eSet=new Set(data.evening);
+
+let rows='';
+data.morning.forEach(n=>{
+if(!eSet.has(n)) rows+=`<tr class="row-morning"><td>${n}</td><td>1</td><td></td></tr>`;
+});
+data.morning.forEach(n=>{
+if(eSet.has(n)) rows+=`<tr class="row-both"><td>${n}</td><td>1</td><td>1</td></tr>`;
+});
+data.evening.forEach(n=>{
+if(!mSet.has(n)) rows+=`<tr class="row-evening"><td>${n}</td><td></td><td>1</td></tr>`;
+});
+
+const off=data.offday.join(', ');
+
+document.getElementById('rosterCard').innerHTML=`
+<div class="roster-body">
+
+<div class="left-section">
+<div class="section-header">CHILDREN</div>
+<table>
+<tr><th>Name</th><th>Morning</th><th>Evening</th></tr>
+${rows}
+<tr class="row-total-label"><td>Total</td><td>${data.morning.length}</td><td>${data.evening.length}</td></tr>
+<tr class="row-grand"><td colspan="2">TOTAL=</td><td>${data.morning.length+data.evening.length}</td></tr>
+</table>
+</div>
+
+<div class="right-section">
+<div class="offday-header">OFFDAY</div>
+<table>
+<tr><td class="offday-names">${off}</td></tr>
+</table>
+<div class="date-cell">${day}</div>
+</div>
+
+</div>`;
 }
 
-function render() {
-  const data = rosterData[activeDay];
-  const mSet = new Set(data.morning);
-  const eSet = new Set(data.evening);
+document.getElementById('daySelect').addEventListener('change',render);
 
-  // pills
-  document.querySelectorAll('.pill').forEach(p => {
-    p.classList.toggle('active', p.textContent === activeDay.slice(0,3).toUpperCase());
-  });
-
-  // stats
-  document.getElementById('statsRow').innerHTML = `
-    <div class="stat-badge morning">
-      <span class="label">Morning</span>
-      <span class="value">${data.morning.length}</span>
-    </div>
-    <div class="stat-badge evening">
-      <span class="label">Evening</span>
-      <span class="value">${data.evening.length}</span>
-    </div>
-    <div class="stat-badge offday">
-      <span class="label">Off Day</span>
-      <span class="value">${data.offday.length}</span>
-    </div>
-    <div class="stat-badge total">
-      <span class="label">Total Shifts</span>
-      <span class="value">${data.morning.length + data.evening.length}</span>
-    </div>
-  `;
-
-  // build ordered list: morning-only → both → evening-only
-  const morningOnly = data.morning.filter(n => !eSet.has(n));
-  const both        = data.morning.filter(n =>  eSet.has(n));
-  const eveningOnly = data.evening.filter(n => !mSet.has(n));
-
-  const delay = (i) => `animation-delay:${i * 0.03}s`;
-
-  let rows = '';
-  let i = 0;
-
-  morningOnly.forEach(n => {
-    rows += `<tr class="row-morning" style="${delay(i++)}">
-      <td><div class="name-cell"><div class="shift-bar"></div>${n}</div></td>
-      <td><span class="check morning">✓</span></td>
-      <td><span class="dash">–</span></td>
-    </tr>`;
-  });
-  both.forEach(n => {
-    rows += `<tr class="row-both" style="${delay(i++)}">
-      <td><div class="name-cell"><div class="shift-bar"></div>${n}</div></td>
-      <td><span class="check morning">✓</span></td>
-      <td><span class="check evening">✓</span></td>
-    </tr>`;
-  });
-  eveningOnly.forEach(n => {
-    rows += `<tr class="row-evening" style="${delay(i++)}">
-      <td><div class="name-cell"><div class="shift-bar"></div>${n}</div></td>
-      <td><span class="dash">–</span></td>
-      <td><span class="check evening">✓</span></td>
-    </tr>`;
-  });
-
-  document.getElementById('rosterBody').innerHTML = rows;
-  document.getElementById('rosterFoot').innerHTML = `
-    <tr class="row-totals">
-      <td>Totals</td>
-      <td>${data.morning.length}</td>
-      <td>${data.evening.length}</td>
-    </tr>
-  `;
-
-  // day card
-  document.getElementById('dayName').textContent = activeDay.toUpperCase();
-
-  // off day
-  document.getElementById('offdayList').innerHTML = data.offday
-    .map(n => `<span class="offday-chip">${n}</span>`)
-    .join('');
-}
-
-buildPills();
 render();
+
 </script>
 </body>
 </html>

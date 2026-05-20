@@ -454,17 +454,17 @@ l<!DOCTYPE html>
 const ALL_CHILDREN = [
   "Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching",
   "Juie","Afrain","Nafisa","Ashik","Abrar","Mou","Arpita","Anila","Ratan","Alvee",
-  "Yeasmin","Sumaya","Jiniya","Arifa","Ashiq"
+  "Yeasmin","Sumaya","Jiniya","Arifa"
 ];
 
 let defaultData = {
-  Saturday: { morning: ["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"], evening: ["Runu","Mou","Onti","Jiniya","Nafisa","Arifa","Saied","Ashik","Suikraching"], offday: [], leave: {} },
-  Sunday: { morning: ["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"], evening: ["Juie","Arifa","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"], offday: [], leave: {} },
-  Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: [], leave: {} },
-  Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: { "Arpita": "L18,E19,M22", "ratan": "L18,L20(bh)" } },
-  Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Arifa","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: [], leave: {} },
-  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Arifa","Ashiq","Ratan"], offday: [], leave: {} },
-  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Arifa","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: [], leave: {} }
+  Saturday: { morning: ["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"], evening: ["Runu","Mou","Onti","Jiniya","Nafisa","Abrar","Saied","Ashik","Suikraching"], offday: ["Anika","Arpita","Ratan"], leave: {} },
+  Sunday: { morning: ["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"], evening: ["Juie","Abrar","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"], offday: ["Mou","Hasib","Anila","Rida"], leave: {} },
+  Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: ["Saied","Abrar","Nafisa"], leave: {} },
+  Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee", "Abrar"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: {} },
+  Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Abrar","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: ["Ashik","Afrain","Onti"], leave: {} },
+  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Abrar","Ashiq","Ratan"], offday: [], leave: {"Juie","Suikraching","Alvee"} },
+  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Abrar","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: ["Runu"], leave: {} }
 };
 
 let rosterData = JSON.parse(localStorage.getItem('rosterData')) || defaultData;

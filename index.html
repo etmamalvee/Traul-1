@@ -101,7 +101,15 @@ l<!DOCTYPE html>
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(30, 107, 30, 0.4);
   }
-
+    /* রিসেট বাটনের নতুন স্টাইল */
+  .btn-reset {
+    background: #962d2d !important;
+    border-color: #ff4d4d !important;
+  }
+  .btn-reset:hover {
+    background: #6b1a1a !important;
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4) !important;
+  }
   .controls button:active { transform: translateY(1px); }
 
   .btn-download {
@@ -411,6 +419,8 @@ l<!DOCTYPE html>
 
   <button onclick="openEditModal()">✏️ Edit</button>
   <button class="btn-download" onclick="downloadRosterImage()">📥 Download Image</button>
+    <button class="btn-reset" onclick="resetRosterData()">🔄 Reset Data</button>
+
 </div>
 
 <div class="roster-card" id="rosterCard">
@@ -605,6 +615,19 @@ function downloadRosterImage() {
     // Re-enable app interactive animations post download pipeline
     rosterCard.classList.add('run-animation');
   });
+}
+  
+ // এইটা আগের ফাংশনের শেষ ব্র্যাকেট
+
+// ঠিক এখান থেকে নিচের নতুন কোডটি পেস্ট করবেন:
+function resetRosterData() {
+  const confirmReset = confirm("Are you sure you want to reset all modified data to original defaults?");
+  if (confirmReset) {
+    localStorage.removeItem('rosterData');
+    rosterData = JSON.parse(JSON.stringify(defaultData));
+    render();
+    alert("Data has been successfully reset!");
+  }
 }
 
 function openEditModal() {

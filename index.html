@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Children Duty Roster</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Barlow:wght@400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Barlow:wght@400;500;600;700&display=swap');
 
   :root {
     --green-dark: #114b11;
@@ -69,7 +69,7 @@
     border-radius: 6px;
     padding: 8px 14px;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     font-family: 'Barlow', sans-serif;
     cursor: pointer;
     outline: none;
@@ -113,16 +113,6 @@
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4) !important;
   }
 
-  /* Reset Button Style */
-  .btn-reset {
-    background: #962d2d !important;
-    border-color: #ff4d4d !important;
-  }
-  .btn-reset:hover {
-    background: #6b1a1a !important;
-    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4) !important;
-  }
-
   /* ===== MAIN ROSTER CARD ===== */
   .roster-card {
     background: #f4faf4;
@@ -135,6 +125,7 @@
     opacity: 0;
   }
 
+  /* Card load animation selector (will be temporarily disabled on capture) */
   .roster-card.run-animation {
     animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
   }
@@ -160,10 +151,10 @@
     color: var(--white);
     text-align: center;
     font-family: 'Teko', sans-serif;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     letter-spacing: 2px;
     padding: 8px 0;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .children-table {
@@ -174,44 +165,33 @@
   .children-table th {
     background: #a3dba3;
     color: #000;
-    font-weight: 800;
-    font-size: 1.05rem;
-    padding: 10px 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 8px;
     border: 1px solid var(--border);
     text-align: center;
   }
 
   .children-table td {
-    padding: 8px 10px;
-    border: 1px solid #777;
-    font-size: 1.05rem;
+    padding: 6px 10px;
+    border: 1px solid #999;
+    font-size: 0.95rem;
     color: #000;
-    font-weight: 700;
+    font-weight: 600;
     text-align: center;
   }
 
+  /* Row Appear Base Animation */
   .run-animation .children-table tbody tr {
     animation: rowAppear 0.4s ease-out backwards;
   }
 
-  .row-morning { background: var(--green-pale); color: #082e08; }
-  .row-both { background: #ffe0b2; color: #7a3700; }
-  .row-evening { background: var(--red-light); color: #5c0000; }
-  .row-zero { background: #e0e0e0; color: #444; }
-  
-  .row-total-label td { 
-    background: var(--blue-light); 
-    font-weight: 800; 
-    font-size: 1.1rem;
-    color: #002752;
-  }
-  
-  .row-grand td { 
-    background: var(--yellow); 
-    font-weight: 900;
-    font-size: 1.15rem;
-    color: #000;
-  }
+  .row-morning { background: var(--green-pale); }
+  .row-both { background: #ffe0b2; }
+  .row-evening { background: var(--red-light); }
+  .row-zero { background: #e0e0e0; color: #666; }
+  .row-total-label { background: var(--blue-light); font-weight: 700; }
+  .row-grand { background: var(--yellow); font-weight: 700; }
 
   /* ===== RIGHT SECTION ===== */
   .right-section {
@@ -225,10 +205,10 @@
     color: #111;
     text-align: center;
     font-family: 'Teko', sans-serif;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     letter-spacing: 2px;
     padding: 8px 0;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .right-table {
@@ -239,61 +219,60 @@
   .right-table th {
     background: #a3dba3;
     color: #000;
-    font-weight: 800;
-    font-size: 1.05rem;
-    padding: 10px 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 8px;
     border: 1px solid var(--border);
     text-align: center;
   }
 
   .right-table td {
-    padding: 10px 12px;
-    border: 1px solid #777;
-    font-size: 1.05rem;
+    padding: 8px 12px;
+    border: 1px solid #999;
+    font-size: 0.95rem;
     color: #000;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .offday-row td { background: #fffde6; }
-  .offday-names { color: #cc0000; font-weight: 800; }
+  .offday-names { color: #b30000; font-weight: 700; }
 
   .leave-header-row td {
     background: var(--green-mid);
     color: white;
-    font-weight: 800;
+    font-weight: 700;
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 1rem;
     letter-spacing: 1px;
-    padding: 8px;
+    padding: 6px;
   }
 
   .leave-row { background: #fff9e6; }
-  .leave-row td { font-weight: 700; color: #111; }
+  .leave-row td:first-child { font-weight: 700; color: #111; }
 
   .trail-header-row td {
     background: var(--orange);
     color: white;
-    font-weight: 800;
+    font-weight: 700;
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 1rem;
     letter-spacing: 1px;
-    padding: 8px;
+    padding: 6px;
   }
 
   .trail-row { background: #f0f8ff; }
-  .trail-row td { padding: 10px 12px; font-weight: 700; }
+  .trail-row td { padding: 8px 12px; }
 
   .date-cell {
     background: var(--green-dark);
     color: var(--yellow);
     text-align: center;
     font-family: 'Teko', sans-serif;
-    font-size: 1.9rem;
+    font-size: 1.8rem;
     letter-spacing: 2px;
     padding: 12px;
     border-top: 4px solid var(--green-dark);
     margin-top: auto;
-    font-weight: 600;
   }
 
   /* ===== MODAL & CHIPS ===== */
@@ -352,7 +331,6 @@
     font-family: 'Barlow', sans-serif;
     font-size: 0.95rem;
     outline: none;
-    font-weight: 600;
   }
 
   .modal textarea { resize: vertical; min-height: 60px; }
@@ -433,10 +411,10 @@
 
   <button onclick="openEditModal()">✏️ Edit</button>
   <button class="btn-download" onclick="downloadRosterImage()">📥 Download Image</button>
-  <button class="btn-reset" onclick="resetRosterData()">🔄 Reset Data</button>
 </div>
 
-<div class="roster-card" id="rosterCard"></div>
+<div class="roster-card" id="rosterCard">
+  </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -462,8 +440,8 @@
     <label>Off Day Children (comma separated):</label>
     <input type="text" id="editOffday" placeholder="e.g. Yeasmin,Sumaya,Jiniya">
 
-    <label>Leave Data (Write whatever you want - one per line):</label>
-    <textarea id="editLeave" placeholder="e.g. Arpita L18,E19,M22&#10;ratan L18,L20(bh)"></textarea>
+    <label>Leave Data (one per line: Name L18,E19 ...):</label>
+    <textarea id="editLeave" placeholder="Arpita L18,E19,M22&#10;ratan L18,L20(bh)"></textarea>
 
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
@@ -480,16 +458,16 @@ const ALL_CHILDREN = [
 ];
 
 let defaultData = {
-  Saturday: { morning: ["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"], evening: ["Runu","Mou","Onti","Jiniya","Nafisa","Arifa","Saied","Ashik","Suikraching"], offday: ["Anika","Arpita","Ratan"], leave: [] },
-  Sunday: { morning: ["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"], evening: ["Juie","Arifa","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"], offday: ["Mou", "Hasib","Anila","Rida"], leave: [] },
-  Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: ["Saied","Arifa","Nafisa"], leave: [] },
-  Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: ["Arpita L18,E19,M22", "ratan L18,L20(bh)"] },
-  Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Arifa","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: ["Ashik","Afrain","Onti"], leave: [] },
-  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Arifa","Ashiq","Ratan"], offday: ["Juie","Suikraching","Alvee"], leave: [] },
-  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Arifa","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: ["Runu"], leave: [] }
+  Saturday: { morning: ["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"], evening: ["Runu","Mou","Onti","Jiniya","Nafisa","Arifa","Saied","Ashik","Suikraching"], offday: [], leave: {} },
+  Sunday: { morning: ["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"], evening: ["Juie","Arifa","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"], offday: [], leave: {} },
+  Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: [], leave: {} },
+  Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: { "Arpita": "L18,E19,M22", "ratan": "L18,L20(bh)" } },
+  Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Arifa","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: [], leave: {} },
+  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Arifa","Ashiq","Ratan"], offday: [], leave: {} },
+  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Arifa","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: [], leave: {} }
 };
 
-let rosterData = JSON.parse(localStorage.getItem('rosterData')) || JSON.parse(JSON.stringify(defaultData));
+let rosterData = JSON.parse(localStorage.getItem('rosterData')) || defaultData;
 
 function formatDisplayDate(dateStr) {
   if (!dateStr) return '';
@@ -500,6 +478,7 @@ function formatDisplayDate(dateStr) {
 
 function render() {
   const card = document.getElementById('rosterCard');
+  // Dynamic refresh animation container
   card.classList.remove('run-animation');
 
   const day = document.getElementById('daySelect').value;
@@ -540,15 +519,16 @@ function render() {
   let tableRows = morningRows + bothRows + eveningRows;
 
   let leaveRows = '';
-  if (!data.leave || data.leave.length === 0) {
+  const leaveEntries = Object.entries(data.leave);
+  if (leaveEntries.length === 0) {
     leaveRows = `<tr class="leave-row"><td colspan="2" style="text-align:center;color:#666;font-style:italic;">No leave data</td></tr>`;
   } else {
-    data.leave.forEach(line => {
-      leaveRows += `<tr class="leave-row"><td colspan="2" style="text-align:left; padding-left:15px;">${line}</td></tr>`;
+    leaveEntries.forEach(([name, info]) => {
+      leaveRows += `<tr class="leave-row"><td>${name}</td><td>${info}</td></tr>`;
     });
   }
 
-  const offdayNames = data.offday && data.offday.length > 0 ? data.offday.join(', ') : '—';
+  const offdayNames = data.offday.length > 0 ? data.offday.join(', ') : '—';
   const dateDisplay = dateVal ? formatDisplayDate(dateVal) : day;
 
   card.innerHTML = `
@@ -595,21 +575,24 @@ function render() {
     </div>
   `;
 
+  // Trigger smooth rendering layout after nodes injection
   setTimeout(() => {
     card.classList.add('run-animation');
   }, 10);
 }
 
+// ===== ABSOLUTE BULLETPROOF DOWNLOAD BLOCK =====
 function downloadRosterImage() {
   const rosterCard = document.getElementById('rosterCard');
   const selectedDay = document.getElementById('daySelect').value;
   const selectedDate = document.getElementById('dateInput').value || 'roster';
 
+  // CRITICAL FIX: Microsecond animation suspension for flawless canvas frame capture
   rosterCard.classList.remove('run-animation');
   rosterCard.style.opacity = '1'; 
 
   html2canvas(rosterCard, {
-    scale: 2, 
+    scale: 2, // Double quality configuration 
     backgroundColor: '#f4faf4',
     useCORS: true,
     logging: false
@@ -619,18 +602,9 @@ function downloadRosterImage() {
     link.href = canvas.toDataURL('image/png');
     link.click();
 
+    // Re-enable app interactive animations post download pipeline
     rosterCard.classList.add('run-animation');
   });
-}
-
-function resetRosterData() {
-  const confirmReset = confirm("Are you sure you want to reset all modified data to original defaults?");
-  if (confirmReset) {
-    localStorage.removeItem('rosterData');
-    rosterData = JSON.parse(JSON.stringify(defaultData));
-    render();
-    alert("Data has been successfully reset!");
-  }
 }
 
 function openEditModal() {
@@ -638,8 +612,8 @@ function openEditModal() {
   document.getElementById('editDay').value = day;
   buildChips(day);
   const data = rosterData[day];
-  document.getElementById('editOffday').value = data.offday ? data.offday.join(',') : '';
-  document.getElementById('editLeave').value = data.leave && Array.isArray(data.leave) ? data.leave.join('\n') : '';
+  document.getElementById('editOffday').value = data.offday.join(',');
+  document.getElementById('editLeave').value = Object.entries(data.leave).map(([k,v])=>`${k} ${v}`).join('\n');
   
   const modalOverlay = document.getElementById('modalOverlay');
   modalOverlay.style.display = 'flex';
@@ -666,13 +640,13 @@ function buildChips(day) {
 
   ALL_CHILDREN.forEach(name => {
     const mChip = document.createElement('span');
-    mChip.className = 'chip' + (data.morning && data.morning.includes(name) ? ' selected' : '');
+    mChip.className = 'chip' + (data.morning.includes(name) ? ' selected' : '');
     mChip.textContent = name;
     mChip.onclick = () => mChip.classList.toggle('selected');
     morningDiv.appendChild(mChip);
 
     const eChip = document.createElement('span');
-    eChip.className = 'chip' + (data.evening && data.evening.includes(name) ? ' selected' : '');
+    eChip.className = 'chip' + (data.evening.includes(name) ? ' selected' : '');
     eChip.textContent = name;
     eChip.onclick = () => eChip.classList.toggle('selected');
     eveningDiv.appendChild(eChip);
@@ -682,14 +656,22 @@ function buildChips(day) {
 function saveEdit() {
   const day = document.getElementById('editDay').value;
 
-  const morning = [...document.querySelectorAll('#morningChips .chip.selected')].map(c => c.textContent.trim());
-  const evening = [...document.querySelectorAll('#eveningChips .chip.selected')].map(c => c.textContent.trim());
+  const morning = [...document.querySelectorAll('#morningChips .chip.selected')].map(c => c.textContent);
+  const evening = [...document.querySelectorAll('#eveningChips .chip.selected')].map(c => c.textContent);
 
   const offdayRaw = document.getElementById('editOffday').value;
   const offday = offdayRaw.split(',').map(s=>s.trim()).filter(Boolean);
 
   const leaveRaw = document.getElementById('editLeave').value;
-  const leave = leaveRaw.split('\n').map(line => line.trim()).filter(Boolean);
+  const leave = {};
+  leaveRaw.split('\n').forEach(line => {
+    const parts = line.trim().split(' ');
+    if (parts.length >= 2) {
+      const name = parts[0];
+      const info = parts.slice(1).join(' ');
+      leave[name] = info;
+    }
+  });
 
   rosterData[day] = { morning, evening, offday, leave };
   localStorage.setItem('rosterData', JSON.stringify(rosterData));
@@ -751,8 +733,8 @@ document.getElementById('daySelect').addEventListener('change', function() {
 document.getElementById('editDay').addEventListener('change', function() {
   buildChips(this.value);
   const data = rosterData[this.value];
-  document.getElementById('editOffday').value = data.offday ? data.offday.join(',') : '';
-  document.getElementById('editLeave').value = data.leave && Array.isArray(data.leave) ? data.leave.join('\n') : '';
+  document.getElementById('editOffday').value = data.offday.join(',');
+  document.getElementById('editLeave').value = Object.entries(data.leave).map(([k,v])=>`${k} ${v}`).join('\n');
 });
 
 render();

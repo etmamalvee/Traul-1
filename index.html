@@ -688,14 +688,22 @@ function saveEdit() {
 
   const leaveRaw = document.getElementById('editLeave').value;
   const leave = {};
+  
   leaveRaw.split('\n').forEach(line => {
-    const parts = line.trim().split(' ');
-    if (parts.length >= 2) {
-      const name = parts[0];
-      const info = parts.slice(1).join(' ');
-      leave[name] = info;
+    const trimmedLine = line.trim();
+    if (!trimmedLine) return; // ফাঁকা লাইন থাকলে সেটা বাদ দেবে
+    
+    // লাইনের ভেতরের প্রথম স্পেসের ইনডেক্স বের করবে
+    const firstSpaceIndex = trimmedLine.indexOf(' ');
+    if (firstSpaceIndex !== -1) {
+      const name = trimmedLine.substring(0, firstSpaceIndex).trim();
+      const info = trimmedLine.substring(firstSpaceIndex + 1).trim();
+      if (name && info) {
+        leave[name] = info;
+      }
     }
   });
+  
 
   rosterData[day] = { morning, evening, offday, leave };
   localStorage.setItem('rosterData', JSON.stringify(rosterData));

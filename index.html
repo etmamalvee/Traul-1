@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -112,7 +112,7 @@
     background: #1f618d !important;
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4) !important;
   }
-  
+    /* রিসেট বাটনের নতুন স্টাইল */
   .btn-reset {
     background: #962d2d !important;
     border-color: #ff4d4d !important;
@@ -135,6 +135,7 @@
     opacity: 0;
   }
 
+  /* Card load animation selector (will be temporarily disabled on capture) */
   .roster-card.run-animation {
     animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
   }
@@ -190,6 +191,7 @@
     text-align: center;
   }
 
+  /* Row Appear Base Animation */
   .run-animation .children-table tbody tr {
     animation: rowAppear 0.4s ease-out backwards;
   }
@@ -256,8 +258,7 @@
   }
 
   .leave-row { background: #fff9e6; }
-  /* white-space: pre-wrap যোগ করা হয়েছে যেন টেক্সটের এন্টার/নতুন লাইন কাজ করে */
-  .leave-row td { white-space: pre-wrap; font-size: 0.95rem; color: #111; line-height: 1.4; font-weight: 600; }
+  .leave-row td:first-child { font-weight: 700; color: #111; }
 
   .trail-header-row td {
     background: var(--orange);
@@ -342,7 +343,7 @@
     outline: none;
   }
 
-  .modal textarea { resize: vertical; min-height: 80px; }
+  .modal textarea { resize: vertical; min-height: 60px; }
   .modal-actions { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
   .btn-save { background: var(--green-mid); color: var(--yellow); border: 2px solid var(--yellow); border-radius: 6px; padding: 8px 24px; font-weight: 700; cursor: pointer; }
   .btn-cancel { background: #7c1a1a; color: #fff; border: 2px solid #ff4d4d; border-radius: 6px; padding: 8px 24px; font-weight: 700; cursor: pointer; }
@@ -383,16 +384,20 @@
     from { opacity: 0; transform: translateY(30px) scale(0.99); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
+
   @keyframes rowAppear {
     from { opacity: 0; transform: translateX(-15px); }
     to { opacity: 1; transform: translateX(0); }
   }
+
   @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
@@ -416,10 +421,12 @@
 
   <button onclick="openEditModal()">✏️ Edit</button>
   <button class="btn-download" onclick="downloadRosterImage()">📥 Download Image</button>
-  <button class="btn-reset" onclick="resetRosterData()">🔄 Reset Data</button>
+    <button class="btn-reset" onclick="resetRosterData()">🔄 Reset Data</button>
+
 </div>
 
-<div class="roster-card" id="rosterCard"></div>
+<div class="roster-card" id="rosterCard">
+  </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -445,7 +452,7 @@
     <label>Off Day Children (comma separated):</label>
     <input type="text" id="editOffday" placeholder="e.g. Yeasmin,Sumaya,Jiniya">
 
-    <label>Leave Data (Write anything, use Enter for new lines):</label>
+    <label>Leave Data (one per line: Name L18,E19 ...):</label>
     <textarea id="editLeave" placeholder="Arpita L18,E19,M22&#10;ratan L18,L20(bh)"></textarea>
 
     <div class="modal-actions">
@@ -462,15 +469,14 @@ const ALL_CHILDREN = [
   "Yeasmin","Sumaya","Jiniya"
 ];
 
-// defaultData তে leave প্রোপার্টি অবজেক্ট {} থেকে পরিবর্তন করে ফ্রী টেক্সট "" (String) করা হয়েছে
 let defaultData = {
-  Saturday: { morning: ["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"], evening: ["Runu","Mou","Onti","Jiniya","Nafisa","Abrar","Saied","Ashik","Suikraching"], offday: ["Anika","Arpita","Ratan"], leave: "" },
-  Sunday: { morning: ["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"], evening: ["Juie","Abrar","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"], offday: ["Mou","Hasib","Anila","Rida"], leave: "" },
-  Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: ["Saied","Abrar","Nafisa"], leave: "" },
-  Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee", "Abrar"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: "" },
-  Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Abrar","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: ["Ashik","Afrain","Onti"], leave: "" },
-  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Abrar","Ashiq","Ratan"], offday: ["Juie","Suikraching","Alvee"], leave: "" },
-  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Abrar","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: [], leave: "" }
+  Saturday: { morning: ["Juie","Yeasmin","Rida","Anila","Sumaya","Afrain","Alvee"], evening: ["Runu","Mou","Onti","Jiniya","Nafisa","Abrar","Saied","Ashik","Suikraching"], offday: ["Anika","Arpita","Ratan"], leave: {} },
+  Sunday: { morning: ["Yeasmin","Onti","Nafisa","Saied","Anika","Ashik","Suikraching"], evening: ["Juie","Abrar","Afrain","Runu","Arpita","Jiniya","Sumaya","Alvee","Ratan"], offday: ["Mou","Hasib","Anila","Rida"], leave: {} },
+  Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: ["Saied","Abrar","Nafisa"], leave: {} },
+  Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee", "Abrar"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: {} },
+  Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Abrar","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: ["Ashik","Afrain","Onti"], leave: {} },
+  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Abrar","Ashiq","Ratan"], offday: ["Juie","Suikraching","Alvee"], leave: {} },
+  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Abrar","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: [], leave: {} }
 };
 
 let rosterData = JSON.parse(localStorage.getItem('rosterData')) || defaultData;
@@ -484,6 +490,7 @@ function formatDisplayDate(dateStr) {
 
 function render() {
   const card = document.getElementById('rosterCard');
+  // Dynamic refresh animation container
   card.classList.remove('run-animation');
 
   const day = document.getElementById('daySelect').value;
@@ -501,6 +508,7 @@ function render() {
 
   let morningTotal = data.morning.length;
   let eveningTotal = data.evening.length;
+
   let index = 0;
 
   ALL_CHILDREN.forEach(name => {
@@ -520,17 +528,20 @@ function render() {
     }
   });
 
-  let tableRows = morningRows + bothRows + eveningRows;
-  
-  // অবজেক্ট স্প্লিটিং মেকানিজম বাদ দিয়ে সরাসরি টেক্সট ভ্যালু রেন্ডার করার লজিক
-  let leaveContent = '';
-  if (!data.leave || data.leave.trim() === '') {
-    leaveContent = `<tr class="leave-row"><td colspan="2" style="text-align:center;color:#666;font-style:italic;">No leave data</td></tr>`;
+let tableRows = morningRows + bothRows + eveningRows;
+
+  let leaveRows = '';
+  const leaveEntries = Object.entries(data.leave);
+  if (leaveEntries.length === 0) {
+    leaveRows = `<tr class="leave-row"><td colspan="2" style="text-align:center;color:#666;font-style:italic;">No leave data</td></tr>`;
   } else {
-    leaveContent = `<tr class="leave-row"><td colspan="2">${data.leave}</td></tr>`;
+    leaveEntries.forEach(([name, info]) => {
+      leaveRows += `<tr class="leave-row"><td>${name}</td><td>${info}</td></tr>`;
+    });
   }
   
-  const offdayNames = data.offday && data.offday.length > 0 ? data.offday.join(', ') : '—';
+
+  const offdayNames = data.offday.length > 0 ? data.offday.join(', ') : '—';
   const dateDisplay = dateVal ? formatDisplayDate(dateVal) : day;
 
   card.innerHTML = `
@@ -565,7 +576,7 @@ function render() {
             <tr class="offday-row"><td>CHILDREN</td><td class="offday-names">${offdayNames}</td></tr>
             <tr><td colspan="2" style="background:#f4faf4;height:6px;"></td></tr>
             <tr class="leave-header-row"><td colspan="2">Leave Data</td></tr>
-            ${leaveContent}
+            ${leaveRows}
             <tr><td colspan="2" style="background:#f4faf4;height:6px;"></td></tr>
             <tr class="trail-header-row"><td colspan="2">Trail</td></tr>
             <tr class="trail-row"><td>Morning</td><td></td></tr>
@@ -577,21 +588,24 @@ function render() {
     </div>
   `;
 
+  // Trigger smooth rendering layout after nodes injection
   setTimeout(() => {
     card.classList.add('run-animation');
   }, 10);
 }
 
+// ===== ABSOLUTE BULLETPROOF DOWNLOAD BLOCK =====
 function downloadRosterImage() {
   const rosterCard = document.getElementById('rosterCard');
   const selectedDay = document.getElementById('daySelect').value;
   const selectedDate = document.getElementById('dateInput').value || 'roster';
 
+  // CRITICAL FIX: Microsecond animation suspension for flawless canvas frame capture
   rosterCard.classList.remove('run-animation');
   rosterCard.style.opacity = '1'; 
 
   html2canvas(rosterCard, {
-    scale: 2, 
+    scale: 2, // Double quality configuration 
     backgroundColor: '#f4faf4',
     useCORS: true,
     logging: false
@@ -600,10 +614,12 @@ function downloadRosterImage() {
     link.download = `Roster_${selectedDay}_${selectedDate}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
+
+    // Re-enable app interactive animations post download pipeline
     rosterCard.classList.add('run-animation');
   });
 }
-
+  // রিসেট করার নতুন ফাংশন
 function resetRosterData() {
   const confirmReset = confirm("Are you sure you want to reset all modified data to original defaults?");
   if (confirmReset) {
@@ -614,15 +630,14 @@ function resetRosterData() {
   }
 }
 
+
 function openEditModal() {
   const day = document.getElementById('daySelect').value;
   document.getElementById('editDay').value = day;
   buildChips(day);
   const data = rosterData[day];
-  document.getElementById('editOffday').value = data.offday ? data.offday.join(',') : '';
-  
-  // অবজেক্ট ডেসপ্লিট করার পুরাতন মেকানিজম বাদ দিয়ে সরাসরি টেক্সট ভ্যালু লোড করার কোড
-  document.getElementById('editLeave').value = (typeof data.leave === 'string') ? data.leave : "";
+  document.getElementById('editOffday').value = data.offday.join(',');
+  document.getElementById('editLeave').value = Object.entries(data.leave).map(([k,v])=>`${k} ${v}`).join('\n');
   
   const modalOverlay = document.getElementById('modalOverlay');
   modalOverlay.style.display = 'flex';
@@ -664,13 +679,23 @@ function buildChips(day) {
 
 function saveEdit() {
   const day = document.getElementById('editDay').value;
+
   const morning = [...document.querySelectorAll('#morningChips .chip.selected')].map(c => c.textContent);
   const evening = [...document.querySelectorAll('#eveningChips .chip.selected')].map(c => c.textContent);
+
   const offdayRaw = document.getElementById('editOffday').value;
   const offday = offdayRaw.split(',').map(s=>s.trim()).filter(Boolean);
-  
-  // সরাসরি টেক্সট ভ্যালু সেভ করার মেকানিজম
-  const leave = document.getElementById('editLeave').value;
+
+  const leaveRaw = document.getElementById('editLeave').value;
+  const leave = {};
+  leaveRaw.split('\n').forEach(line => {
+    const parts = line.trim().split(' ');
+    if (parts.length >= 2) {
+      const name = parts[0];
+      const info = parts.slice(1).join(' ');
+      leave[name] = info;
+    }
+  });
 
   rosterData[day] = { morning, evening, offday, leave };
   localStorage.setItem('rosterData', JSON.stringify(rosterData));
@@ -732,8 +757,8 @@ document.getElementById('daySelect').addEventListener('change', function() {
 document.getElementById('editDay').addEventListener('change', function() {
   buildChips(this.value);
   const data = rosterData[this.value];
-  document.getElementById('editOffday').value = data.offday ? data.offday.join(',') : '';
-  document.getElementById('editLeave').value = (typeof data.leave === 'string') ? data.leave : "";
+  document.getElementById('editOffday').value = data.offday.join(',');
+  document.getElementById('editLeave').value = Object.entries(data.leave).map(([k,v])=>`${k} ${v}`).join('\n');
 });
 
 render();

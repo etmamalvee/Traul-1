@@ -112,6 +112,16 @@ l<!DOCTYPE html>
     background: #1f618d !important;
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4) !important;
   }
+    /* রিসেট বাটনের নতুন স্টাইল */
+  .btn-reset {
+    background: #962d2d !important;
+    border-color: #ff4d4d !important;
+  }
+  .btn-reset:hover {
+    background: #6b1a1a !important;
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4) !important;
+  }
+
 
   /* ===== MAIN ROSTER CARD ===== */
   .roster-card {
@@ -235,7 +245,7 @@ l<!DOCTYPE html>
   }
 
   .offday-row td { background: #fffde6; }
-  .offday-names { color: #b30000; font-weight: 700; }
+  .offday-names { color: #ff0000; font-weight: 900; }
 
   .leave-header-row td {
     background: var(--green-mid);
@@ -411,6 +421,8 @@ l<!DOCTYPE html>
 
   <button onclick="openEditModal()">✏️ Edit</button>
   <button class="btn-download" onclick="downloadRosterImage()">📥 Download Image</button>
+    <button class="btn-reset" onclick="resetRosterData()">🔄 Reset Data</button>
+
 </div>
 
 <div class="roster-card" id="rosterCard">
@@ -454,7 +466,7 @@ l<!DOCTYPE html>
 const ALL_CHILDREN = [
   "Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching",
   "Juie","Afrain","Nafisa","Ashik","Abrar","Mou","Arpita","Anila","Ratan","Alvee",
-  "Yeasmin","Sumaya","Jiniya","Arifa"
+  "Yeasmin","Sumaya","Jiniya"
 ];
 
 let defaultData = {
@@ -463,8 +475,8 @@ let defaultData = {
   Monday: { morning: ["Mou","Juie","Sumaya","Runu","Ratan","Alvee","Afrain"], evening: ["Yeasmin","Jiniya","Suikraching","Onti","Ashik","Arpita","Hasib","Anika","Anila","Rida"], offday: ["Saied","Abrar","Nafisa"], leave: {} },
   Tuesday: { morning: ["Onti","Rida","Runu","Anika","Hasib","Saied","Suikraching"], evening: ["Juie","Afrain","Nafisa","Ashik","Mou","Arpita","Anila","Ratan","Alvee", "Abrar"], offday: ["Yeasmin","Sumaya","Jiniya"], leave: {} },
   Wednesday: { morning: ["Juie","Yeasmin","Hasib","Nafisa","Anila","Sumaya","Alvee"], evening: ["Mou","Saied","Abrar","Rida","Jiniya","Runu","Anika","Arpita","Suikraching","Ratan"], offday: ["Ashik","Afrain","Onti"], leave: {} },
-  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Abrar","Ashiq","Ratan"], offday: [], leave: {"Juie","Suikraching","Alvee"} },
-  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Abrar","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: ["Runu"], leave: {} }
+  Thursday: { morning: ["Mou","Hasib","Rida","Arpita","Yeasmin","Anika","Saied"], evening: ["Onti","Sumaya","Runu","Nafisa","Anila","Afrain","Jiniya","Abrar","Ashiq","Ratan"], offday: ["Juie","Suikraching","Alvee"], leave: {} },
+  Friday: { morning: ["Onti","Mou","Afrain","Anila","Nafisa","Suikraching","Ratan"], evening: ["Sumaya","Jiniya","Saied","Juie","Abrar","Yeasmin","Arpita","Ashik","Rida","Hasib","Anika","Alvee"], offday: [], leave: {} }
 };
 
 let rosterData = JSON.parse(localStorage.getItem('rosterData')) || defaultData;
@@ -516,7 +528,7 @@ function render() {
     }
   });
 
-  let tableRows = morningRows + bothRows + eveningRows;
+let tableRows = morningRows + bothRows + eveningRows;
 
   let leaveRows = '';
   const leaveEntries = Object.entries(data.leave);
@@ -527,6 +539,7 @@ function render() {
       leaveRows += `<tr class="leave-row"><td>${name}</td><td>${info}</td></tr>`;
     });
   }
+  
 
   const offdayNames = data.offday.length > 0 ? data.offday.join(', ') : '—';
   const dateDisplay = dateVal ? formatDisplayDate(dateVal) : day;
@@ -606,6 +619,17 @@ function downloadRosterImage() {
     rosterCard.classList.add('run-animation');
   });
 }
+  // রিসেট করার নতুন ফাংশন
+function resetRosterData() {
+  const confirmReset = confirm("Are you sure you want to reset all modified data to original defaults?");
+  if (confirmReset) {
+    localStorage.removeItem('rosterData');
+    rosterData = JSON.parse(JSON.stringify(defaultData));
+    render();
+    alert("Data has been successfully reset!");
+  }
+}
+
 
 function openEditModal() {
   const day = document.getElementById('daySelect').value;
